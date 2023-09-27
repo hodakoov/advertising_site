@@ -10,9 +10,3 @@ class Post(db.Model):
     address = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer, nullable=True)
     Description = db.Column(db.Text, nullable=False)
-
-    '''
-    price - значение может быть "Цена не указана"
-    Если ставить db.Integer, тогда надо отлавливать на стадии переноса
-    Если ставить db.String, тогда работать далее со строкой
-    '''
