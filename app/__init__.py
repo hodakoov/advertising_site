@@ -2,6 +2,7 @@ from flask import Flask
 
 from config import Config
 from app.extensions import db
+from . import routes
 
 
 def create_app(config_class=Config):
@@ -11,8 +12,11 @@ def create_app(config_class=Config):
     # Инициализация расширения Flask
     db.init_app(app)
 
-    @app.route('/test/')
-    def test_page():
-        return '<h1> Testing the <p>Flask</p> Application </h1>'
+    # Регистрация blueprints
+    app.register_blueprint(routes.bp)
+
+    # Создание БД (при отсутствии)
+    with app.app_context():
+        db.create_all()
 
     return app
