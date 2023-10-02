@@ -142,7 +142,6 @@ def scrap_ads():
     initial_url = app.config['SCRAPER_INITIAL_URL']
     page_limit = app.config['SCRAPER_PAGE_LIMIT']
     delay_limit = app.config['SCRAPER_DELAY_LIMIT']
-    db_uri = app.config['SQLALCHEMY_DATABASE_URI']
 
     options = Options()
     options.add_argument('--ignore-certificate-errors')
