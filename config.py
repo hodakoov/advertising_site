@@ -4,14 +4,10 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    # Определяет, включен ли режим отладки
-    # В случае если включен, flask будет показывать
-    # подробную отладочную информацию. Если выключен -
-    # - 500 ошибку без какой либо дополнительной информации.
-    # Не работает пока
-    DEBUG = True
-    # Включение защиты против "Cross-site Request Forgery (CSRF)"
-    CSRF_ENABLED = True
     # URI используемая для подключения к базе данных
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    SCRAPER_INITIAL_URL = 'https://www.avito.ru/moskva/telefony/mobilnye_telefony/apple-ASgBAgICAkS0wA3OqzmwwQ2I_Dc?cd=1'  # noqa: E501
+    SCRAPER_PAGE_LIMIT = 1
+    SCRAPER_DELAY_LIMIT = 20
