@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 from app.models.post import Post
 
@@ -7,5 +7,6 @@ bp = Blueprint('index', __name__)
 
 @bp.route('/')
 def index():
-    posts = Post.query.all()
-    return render_template('index.html', posts=posts)
+    page = request.args.get('page', 1, type=int)
+    pagination = Post.query.paginate(page=page, per_page=6)
+    return render_template('index.html', pagination=pagination)
