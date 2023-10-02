@@ -2,7 +2,7 @@ from flask import Flask
 
 from config import Config
 from app.extensions import db
-from . import routes
+from app import routes
 
 
 def create_app(config_class=Config):
