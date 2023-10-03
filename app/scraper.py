@@ -99,7 +99,7 @@ def scrap_ad(driver, ad_url, delay_limit):
             By.XPATH, "//div[starts-with(@class, 'image-frame-wrapper')]"
         ).get_attribute('data-url')
         image_urls.append(first_image_url)
-        if len(image_preview_elements) > 0:
+        if image_preview_elements:
             for element in image_preview_elements[1:]:
                 element.click()
                 sleep(1)
