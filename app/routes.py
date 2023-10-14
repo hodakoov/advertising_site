@@ -8,7 +8,7 @@ bp = Blueprint('index', __name__)
 @bp.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.paginate(page=page, per_page=6)
+    pagination = Post.query.paginate(page=page, per_page=8)
     return render_template('index.html', pagination=pagination)
 
 

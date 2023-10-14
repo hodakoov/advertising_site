@@ -7,12 +7,12 @@
     <div class="container">
         <div class="row">
             <div class="col-6">
-                <h3>{{ post.title }}</h3>
+                <h3 style="margin-bottom: 20px">{{ post.title }}</h3>
                 {% include 'carousel_image.html' %}
 {#                <img style="height: 285px; object-fit: contain" class="rounded mx-auto d-block"#}
 {#                     src="{{ post.image_url }}"/>#}
                 <p></p>
-                <h6>Описание</h6>
+                <h4 style="margin-top: 20px">Описание</h4>
                 <p>{{ post.description }}</p>
                 <div class="card-footer border-top">
                     <small class="text-body-secondary">
@@ -24,7 +24,7 @@
             <div class="col-4">
                 <h3>Цена: {{ "{:,}".format(post.price) }} ₽</h3>
                 <br>
-                <h4>Адрес</h4>
+                <h6>Адрес</h6>
                 <p>{{ post.address }}</p>
                 <p></p>
             </div>

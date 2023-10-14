@@ -1,6 +1,6 @@
 {% block carousel %}
 
-        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="background-color: rgba(169,169,169,0.36)">
             <div class="carousel-inner">
                 {% for image in images %}
                 <div class="carousel-item {% if loop.index == 1 %}active{% endif %}" data-bs-interval="3000">
