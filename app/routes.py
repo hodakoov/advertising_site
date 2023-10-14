@@ -16,5 +16,4 @@ def index():
 def detail_ad(ad_id: int):
     post = Post.query.filter_by(ad_id=ad_id).first_or_404()
     images = post.image_url.split(' ')
-    print(images)
     return render_template('detail_page.html', post=post, images=images)
