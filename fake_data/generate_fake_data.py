@@ -46,18 +46,13 @@ def save_to_db(row):
 
 
 if __name__ == "__main__":
-    write_to_db = input('Выберите место сохранения данных:\n'
-                        'в базу данных? -> (1)\n'
-                        'в файл .csv? -> (2)\n'
-                        '-> ')
-    if write_to_db in '1':
+    write_to_db = input('Записать данные в базу данных (y/n):\n')
+    if write_to_db.lower() in 'y':
         app = create_app()
         with app.app_context():
             for row in generate_data():
                 save_to_db(row)
-    elif write_to_db in '2':
+    else:
         with open('fake_data.csv', 'w', encoding='utf-8') as f:
             for row in generate_data():
                 save_to_csv(f, row)
-    else:
-        print('Вы ввели недопустимое значение')
