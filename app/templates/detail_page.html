@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h3 style="margin-bottom: 20px">{{ post.title }}</h3>
+                {% include 'carousel_image.html' %}
+{#                <img style="height: 285px; object-fit: contain" class="rounded mx-auto d-block"#}
+{#                     src="{{ post.image_url }}"/>#}
+                <p></p>
+                <h4 style="margin-top: 20px">Описание</h4>
+                <p>{{ post.description }}</p>
+                <div class="card-footer border-top">
+                    <small class="text-body-secondary">
+                        Объявление №{{ post.ad_id }} от {{ post.ad_datetime.strftime('%d-%m-%Y %H:%M') }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <h3>Цена: {{ "{:,}".format(post.price) }} ₽</h3>
+                <br>
+                <h6>Адрес</h6>
+                <p>{{ post.address }}</p>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

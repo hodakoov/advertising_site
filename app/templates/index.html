@@ -5,23 +5,23 @@
 {% block content %}
 
     <div class="container text-center">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3">
             {% for post in pagination.items %}
                 <div class="col">
-                    <div class="card h-100 ">
-                        <img style="height: 285px; object-fit: contain" class="card-img-top"
-                             src="{{ post.image_url }}"/>
+                    <a class=" text-right link-underline link-underline-opacity-0 text-center card h-100" style="max-width: 360px; margin: 0 auto;" href="{{ url_for('index.detail_ad', ad_id=post.ad_id) }}">
+                        <div style="display: flex; justify-content: center; overflow: hidden; height: 285px; width: 100%;">
+                            <img style="height: 100%; width: 100%; object-fit: cover" class="rounded mx-auto d-block"
+                                 src="{{ post.image_url }}"/>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ post.title }}</h5>
-                            <h5 class="card">Цена {{ post.price }}р.</h5>
-                            <p class="card-text">{{ post.description }}</p>
-                            <p class="card-cap">{{ post.address }}</p>
+                            <div class=" text-right link-underline-opacity-0 text-center name-item"
+                           >
+                                <h5 class="link-underline-success">{{ post.title }}</h5>
+                            </div>
+                            <h5 class=" card text-center btn-item"> Цена {{ "{:,}".format(post.price) }} ₽</h5>
+                            <small> {{ post.address }}</small>
                         </div>
-                        <div class="card-footer">
-                            <small class="text-body-secondary">Объявление №{{ post.ad_id }}
-                                от {{ post.ad_datetime.strftime('%d-%m-%Y %H:%M') }}</small>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             {% endfor %}
         </div>
@@ -31,8 +31,8 @@
                 <li class="page-item">
                     <a class="page-link {% if not pagination.has_prev %} disabled {% endif %}"
                        href="{% if pagination.has_prev %}
-                        {{ url_for('index.index', page=pagination.prev_num) }}
-                        {% else %}{% endif %}">Предыдущая
+                            {{ url_for('index.index', page=pagination.prev_num) }}
+                            {% else %}{% endif %}">Предыдущая
                     </a>
                 </li>
 
@@ -53,17 +53,17 @@
                             </li>
                         {% endif %}
                     {% else %}
-                         <li class="page-item">
-                                <a class="page-link ">...</a>
-                         </li>
+                        <li class="page-item">
+                            <a class="page-link ">...</a>
+                        </li>
                     {% endif %}
                 {% endfor %}
 
                 <li class="page-item">
                     <a class="page-link {% if not pagination.has_next %} disabled {% endif %}"
                        href="{% if pagination.has_next %}
-                        {{ url_for('index.index', page=pagination.next_num) }}
-                        {% else %}{% endif %}">Следующая
+                            {{ url_for('index.index', page=pagination.next_num) }}
+                            {% else %}{% endif %}">Следующая
                     </a>
                 </li>
             </ul>
