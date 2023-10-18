@@ -138,11 +138,7 @@ def write_ads_to_db(ads):
     db.session.commit()
 
 
-def scrap_ads():
-    initial_url = app.config['SCRAPER_INITIAL_URL']
-    page_limit = app.config['SCRAPER_PAGE_LIMIT']
-    delay_limit = app.config['SCRAPER_DELAY_LIMIT']
-
+def scrap_ads(initial_url, page_limit, delay_limit):
     options = Options()
     options.add_argument('--ignore-certificate-errors')
     options.add_argument("--headless=new")
@@ -202,13 +198,18 @@ def scrap_ads():
             ads.append(ad)
         sleep(random.uniform(5, delay_limit))
 
-    with app.app_context():
-        write_ads_to_db(ads)
-
     driver.quit()
     logging.info('Scraper session finished.')
+
+    return ads
 
 
 if __name__ == '__main__':
     app = create_app()
-    scrap_ads()
+    with app.app_context():
+        initial_url = app.config['SCRAPER_INITIAL_URL']
+        page_limit = app.config['SCRAPER_PAGE_LIMIT']
+        delay_limit = app.config['SCRAPER_DELAY_LIMIT']
+
+        ads = scrap_ads(initial_url, page_limit, delay_limit)
+        write_ads_to_db(ads)
