@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-from __init__ import create_app
+from app import create_app
 from extensions import db
 from models.post import Post
 
@@ -99,7 +99,7 @@ def scrap_ad(driver, ad_url, delay_limit):
             By.XPATH, "//div[starts-with(@class, 'image-frame-wrapper')]"
         ).get_attribute('data-url')
         image_urls.append(first_image_url)
-        if len(image_preview_elements) > 0:
+        if image_preview_elements:
             for element in image_preview_elements[1:]:
                 element.click()
                 sleep(1)
