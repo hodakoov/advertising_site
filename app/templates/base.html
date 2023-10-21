@@ -31,7 +31,6 @@
         <a href="{{ url_for('index.index') }}" class="d-inline-flex link-body-emphasis text-decoration-none">
           <img src="https://downloadr2.apkmirror.com/wp-content/uploads/2023/01/60/63d0f52c0f817.png"
                class="bi" width="40" height="40" role="img" aria-label="Bootstrap">
-
         </a>
       </div>
 
@@ -44,8 +43,23 @@
       </ul>
 
       <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
+        {% if current_user.is_authenticated %}
+          {% if current_user.is_admin %}
+            <a href="{{ url_for('admin.admin_index') }}">
+              <button type="button" class="btn btn-outline-primary me-2">Админка</button>
+            </a>
+          {% endif %}
+          <a href="{{ url_for('user.logout') }}">
+            <button type="button" class="btn btn-outline-primary me-2">Выйти</button>
+          </a>
+        {% else %}
+          <a href="{{ url_for('user.login') }}">
+            <button type="button" class="btn btn-outline-primary me-2">Войти</button>
+          </a>
+          <a href="{{ url_for('user.register') }}">
+            <button type="button" class="btn btn-primary">Регистрация</button>
+          </a>
+        {% endif %}
       </div>
     </header>
   </div>
