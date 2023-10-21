@@ -19,20 +19,18 @@
             {% endwith %}
             <form action="{{ url_for('user.process_login') }}" method="POST">
                 {{ form.hidden_tag() }}
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 1em">
                     {{ form.username.label }}
                     {{ form.username() }}
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 1em">
                     {{ form.password.label }}
                     {{ form.password() }}
                 </div>
-                <br>
-                <div class="form-group form-check">
+                <div class="form-group form-check" style="margin-bottom: 1em">
                     {{ form.remember_me() }}
                     {{ form.remember_me.label(class_='form-check-label') }}
                 </div>
-                <br>
                 {{ form.submit() }}
             </form>
         </div>
