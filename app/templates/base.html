@@ -45,20 +45,12 @@
       <div class="col-md-3 text-end">
         {% if current_user.is_authenticated %}
           {% if current_user.is_admin %}
-            <a href="{{ url_for('admin.admin_index') }}">
-              <button type="button" class="btn btn-outline-primary me-2">Админка</button>
-            </a>
+            <a class="btn btn-outline-primary me-2" href="{{ url_for('admin.admin_index') }}" role="button">Админка</a>
           {% endif %}
-          <a href="{{ url_for('user.logout') }}">
-            <button type="button" class="btn btn-outline-primary me-2">Выйти</button>
-          </a>
+            <a class="btn btn-outline-primary me-2" href="{{ url_for('user.logout') }}" role="button">Выйти</a>
         {% else %}
-          <a href="{{ url_for('user.login') }}">
-            <button type="button" class="btn btn-outline-primary me-2">Войти</button>
-          </a>
-          <a href="{{ url_for('user.register') }}">
-            <button type="button" class="btn btn-primary">Регистрация</button>
-          </a>
+          <a class="btn btn-outline-primary me-2" href="{{ url_for('user.login') }}" role="button">Войти</a>
+          <a class="btn btn-primary" href="{{ url_for('user.register') }}" role="button">Регистрация</a>
         {% endif %}
       </div>
     </header>
