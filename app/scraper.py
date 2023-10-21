@@ -11,8 +11,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
 from app import create_app
-from extensions import db
-from models.post import Post
+from app.extensions import db
+from app.models.post import Post
 
 
 logging.basicConfig(
@@ -130,7 +130,8 @@ def write_ads_to_db(ads):
             image_url=ad['image_urls'],
             address=ad['address'],
             price=ad['price'],
-            description=ad['desc']
+            description=ad['desc'],
+            author_id=1
         )
         ad_exists = db.session.query(Post).filter(Post.ad_id == ad['id']).count()
         if not ad_exists:
