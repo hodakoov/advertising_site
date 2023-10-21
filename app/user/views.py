@@ -56,6 +56,9 @@ def process_reg():
     if form.validate_on_submit():
         new_user = User(username=form.username.data, email=form.email.data, role='user')
         new_user.set_password(form.password.data)
+        if db.session.query(User).filter(User.username == form.username.data).count():
+            flash('Пользователь с таким именем уже существует')
+            return redirect(url_for('user.register'))
         db.session.add(new_user)
         db.session.commit()
         flash('Вы успешно зарегистрировались!')
