@@ -27,23 +27,22 @@
   <body>
   <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-      <div class="col-md-3 mb-2 mb-md-0">
+      <div class="mb-2 mb-md-0">
         <a href="{{ url_for('index.index') }}" class="d-inline-flex link-body-emphasis text-decoration-none">
           <img src="https://downloadr2.apkmirror.com/wp-content/uploads/2023/01/60/63d0f52c0f817.png"
                class="bi" width="40" height="40" role="img" aria-label="Bootstrap">
-
         </a>
       </div>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="{{ url_for('index.index') }}" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="#" class="nav-link px-2">Features</a></li>
-        <li><a href="#" class="nav-link px-2">Pricing</a></li>
-        <li><a href="#" class="nav-link px-2">FAQs</a></li>
-        <li><a href="#" class="nav-link px-2">About</a></li>
+        <li><a href="{{ url_for('index.index') }}" class="nav-link px-2">Домашняя страница</a></li>
+        <li><a href="{{ url_for('index.add_ad') }}" class="nav-link px-2">Добавить объявление</a></li>
+        <li><a href="#" class="nav-link px-2">Мои объявления</a></li>
+        <li><a href="#" class="nav-link px-2">Поиск объявлений</a></li>
+        <li><a href="#" class="nav-link px-2">О проекте</a></li>
       </ul>
 
-      <div class="col-md-3 text-end">
+      <div class="text-center">
         <button type="button" class="btn btn-outline-primary me-2">Login</button>
         <button type="button" class="btn btn-primary">Sign-up</button>
       </div>

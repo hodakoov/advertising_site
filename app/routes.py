@@ -17,3 +17,9 @@ def detail_ad(ad_id: int):
     post = Post.query.filter_by(ad_id=ad_id).first_or_404()
     images = post.image_url.split(' ')
     return render_template('detail_page.html', post=post, images=images)
+
+
+@bp.route('/add_ad')
+def add_ad():
+    title = 'Страница создания объявления'
+    return render_template('add_ad.html', title=title)
