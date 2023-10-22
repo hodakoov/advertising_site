@@ -5,13 +5,11 @@
 {% block content %}
 
     <div class="container text-center">
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
-            <div class="alert alert-info" role="alert">
-                {% for message in messages %}
-                    {{ message }}<br>
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">{{ message }}<br></div>
                 {% endfor %}
-            </div>
             {% endif %}
         {% endwith %}
 

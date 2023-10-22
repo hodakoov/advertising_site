@@ -27,17 +27,17 @@ def process_login():
         user = User.query.filter(User.username == form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            flash('Вы успешно вошли на сайт')
+            flash('Вы успешно вошли на сайт', 'info')
             return redirect(url_for('index.index'))
 
-    flash('Неправильные имя или пароль')
+    flash('Неправильные имя или пароль', 'danger')
     return redirect(url_for('user.login'))
 
 
 @blueprint.route('/logout')
 def logout():
     logout_user()
-    flash('Вы разлогинились')
+    flash('Вы разлогинились', 'info')
     return redirect(url_for('index.index'))
 
 
@@ -57,11 +57,11 @@ def process_reg():
         new_user = User(username=form.username.data, email=form.email.data, role='user')
         new_user.set_password(form.password.data)
         if db.session.query(User).filter(User.username == form.username.data).count():
-            flash('Пользователь с таким именем уже существует')
+            flash('Пользователь с таким именем уже существует', 'danger')
             return redirect(url_for('user.register'))
         db.session.add(new_user)
         db.session.commit()
-        flash('Вы успешно зарегистрировались!')
+        flash('Вы успешно зарегистрировались!', 'success')
         return redirect(url_for('user.login'))
-    flash('Пожалуйста, исправьте ошибки в форме')
+    flash('Пожалуйста, исправьте ошибки в форме', 'danger')
     return redirect(url_for('user.register'))
