@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import (
-    LoginManager, current_user, login_required, login_user, logout_user
+    LoginManager, current_user, login_user, logout_user
 )
 
 from app.extensions import db

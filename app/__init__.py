@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, redirect, url_for
-from flask_login import LoginManager, current_user, login_required
+from flask_login import LoginManager
 
 from app import routes
 from app.admin.views import blueprint as admin_blueprint
