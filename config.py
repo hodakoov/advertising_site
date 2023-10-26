@@ -11,3 +11,5 @@ class Config:
     SCRAPER_INITIAL_URL = 'https://www.avito.ru/moskva/telefony/mobilnye_telefony/apple-ASgBAgICAkS0wA3OqzmwwQ2I_Dc?cd=1'  # noqa: E501
     SCRAPER_PAGE_LIMIT = 1
     SCRAPER_DELAY_LIMIT = 20
+
+    SECRET_KEY = '3c2b5a460cf5a395731dd6e98a5690cb'

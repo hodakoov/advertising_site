@@ -1,4 +1,5 @@
 from app.extensions import db
+from app.user.models import User
 
 
 class Post(db.Model):
@@ -10,6 +11,7 @@ class Post(db.Model):
     address = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer, nullable=True)
     description = db.Column(db.Text, nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
     def __repr__(self):
         return f'Post "{self.title}" with id->{self.ad_id}'
