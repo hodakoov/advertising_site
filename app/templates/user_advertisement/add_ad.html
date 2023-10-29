@@ -1,0 +1,47 @@
+{%  extends 'base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <form action="{{ url_for('user_advertisement.add_ad_user') }}"
+                  method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="form-group" style="margin-bottom: 1em">
+                    {{ form.title.label }}
+                    {{ form.title() }}
+                </div>
+                <div class="form-group" style="margin-bottom: 1em">
+                    {{ form.description.label }}
+                    {{ form.description() }}
+                </div>
+                <div class="form-group" style="margin-bottom: 1em">
+                    {{ form.address.label }}
+                    {{ form.address() }}
+                </div>
+                <div class="form-group" style="margin-bottom: 1em">
+                    {{ form.price.label }}
+                    {{ form.price() }}
+                    {% if form.price.errors %}
+                    <ul class="errors">
+                    {{ form.price.errors[0] }}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group" style="margin-bottom: 1em">
+                    {{ form.image.label }}
+                    {{ form.image() }}
+                    {% if form.image.errors %}
+                    <ul class="errors">
+                    {{ form.image.errors[0] }}
+                    </ul>
+                    {% endif %}
+                </div>
+                    {{ form.submit() }}
+            </form>
+        </div>
+    </div>
+<div>
+{% endblock %}
