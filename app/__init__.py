@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, flash, redirect, url_for
 from flask_login import LoginManager
 
 from app.show_advertisements.view import blueprint as show_advertisements_blueprint
@@ -11,9 +11,8 @@ from config import Config
 
 
 def create_app(config_class=Config):
-    app = Flask(__name__)
+    app = Flask(__name__, instance_path=Config.UPLOAD_FOLDER)
     app.config.from_object(config_class)
-
     # Инициализация расширения Flask
     db.init_app(app)
 
@@ -24,6 +23,11 @@ def create_app(config_class=Config):
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(user_id)
+
+    @app.errorhandler(413)
+    def too_large(e):
+        flash('Размер файла превышает допустимое значение!', 'danger')
+        return redirect(url_for('user_advertisement.add_ad_user'))
 
     # Регистрация blueprints
     app.register_blueprint(admin_blueprint)

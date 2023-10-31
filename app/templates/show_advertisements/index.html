@@ -20,11 +20,15 @@
                     <a class=" text-right link-underline link-underline-opacity-0 text-center card h-100" style="max-width: 360px; margin: 0 auto;" href="{{ url_for('index.detail_ad', ad_id=post.ad_id) }}">
                         <div style="display: flex; justify-content: center; overflow: hidden; height: 285px; width: 100%;">
                             <img style="height: 100%; width: 100%; object-fit: cover" class="rounded mx-auto d-block"
-                                 src="{{ post.image_url }}"/>
+{#                                 работают#}
+{#                                {% if post.image_url %}src="{{ post.image_url }}"/>{% endif %}#}
+                              {% if post.image_url %}src="{{ url_for('static', filename='images/not_loaded.jpg') }}"/>{% endif %}
+{#                                не работает#}
+{#                                {% if post.image_url %}src="{{ url_for('static', filename='../instance/uploads/admin/post_images/06bb0a476672a6a5e61c478ddb12ba66.png') }}"/>{% endif %}#}
+{#                                {% if post.image_url %}src="{{ url_for('/uploads/admin/post_images/86077e74e29712436fe98f5f24826a69.png') }}"/>{% endif %}#}
                         </div>
                         <div class="card-body">
-                            <div class=" text-right link-underline-opacity-0 text-center name-item"
-                           >
+                            <div class=" text-right link-underline-opacity-0 text-center name-item">
                                 <h5 class="link-underline-success">{{ post.title }}</h5>
                             </div>
                             <h5 class=" card text-center btn-item"> Цена {{ "{:,}".format(post.price) }} ₽</h5>

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+from sqlalchemy import desc
 
 from app.show_advertisements.models import Post
 
@@ -9,7 +10,7 @@ blueprint = Blueprint('index', __name__)
 def index():
     title = 'Главная страница'
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.paginate(page=page, per_page=8)
+    pagination = Post.query.order_by(desc('ad_datetime')).paginate(page=page, per_page=8)
     return render_template('show_advertisements/index.html', pagination=pagination, title=title)
 
 

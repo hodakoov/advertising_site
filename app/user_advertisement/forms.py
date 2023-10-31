@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileRequired, FileAllowed
+from flask_wtf.file import FileAllowed
 from wtforms import StringField, TextAreaField, SubmitField, FileField
 from wtforms.validators import DataRequired, Length, Regexp
 
@@ -28,7 +28,7 @@ class AddAdvertisingForm(FlaskForm):
     )
     image = FileField(
         'Загрузить фотографии объявления',
-        validators=[FileAllowed(['jpg', 'png'], message='Пожалуйста, загружайте только картинки')],
+        validators=[FileAllowed(['png', 'jpg', 'jpeg', 'gif'], message='Пожалуйста, загружайте только картинки')],
         render_kw={"class": "form-control"}
     )
     submit = SubmitField(
