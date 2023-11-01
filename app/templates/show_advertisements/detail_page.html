@@ -34,6 +34,7 @@
                 <h6>Адрес</h6>
                 <p>{{ post.address }}</p>
                 <br>
+                {% if current_user.is_authenticated %}
                 <p><a class="btn btn-secondary me-2"
                       href="{{ url_for('user_advertisement.update_ad_user', ad_id=post.ad_id) }}"
                       role="button">Редактирование объявления</a></p>
@@ -41,6 +42,7 @@
                 <p><a class="btn btn-danger me-2"
                       href="{{ url_for('user_advertisement.delete_ad_user', ad_id=post.ad_id) }}"
                       role="button">Удаление объявления</a></p>
+                {% endif %}
             </div>
         </div>
     </div>

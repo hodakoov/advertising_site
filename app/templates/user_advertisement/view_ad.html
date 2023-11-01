@@ -41,7 +41,7 @@
                 </div>
             {% endfor %}
         </div>
-
+        {% if pagination.pages != 1 %}
         <nav aria-label="Навигация по страницам" style="margin:20px auto 50px">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
@@ -84,6 +84,7 @@
                 </li>
             </ul>
         </nav>
+            {% endif %}
     {% else %}
             <p>Объявлений нет</p>
     {% endif %}
