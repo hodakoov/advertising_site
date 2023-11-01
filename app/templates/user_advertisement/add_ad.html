@@ -13,8 +13,7 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-            <form action="{{ url_for('user_advertisement.add_ad_user') }}"
-                  method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
                 <div class="form-group" style="margin-bottom: 1em">
                     {{ form.title.label }}

@@ -5,6 +5,13 @@
 {% block content %}
 
     <div class="container">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">{{ message }}<br></div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <div class="row">
             <div class="col-6">
                 <h3 style="margin-bottom: 20px">{{ post.title }}</h3>
@@ -26,7 +33,10 @@
                 <br>
                 <h6>Адрес</h6>
                 <p>{{ post.address }}</p>
-                <p></p>
+                <br>
+                <p><a class="btn btn-outline-primary me-2"
+                      href="{{ url_for('user_advertisement.update_ad_user', ad_id=post.ad_id) }}"
+                      role="button">Редактирование объявления</a></p>
             </div>
         </div>
     </div>
