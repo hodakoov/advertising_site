@@ -33,6 +33,6 @@ class AddAdvertisingForm(FlaskForm):
     )
     submit = SubmitField(
         'Отправить',
-        render_kw={"class": "form-control"}
+        render_kw={"class": "form-control btn btn-success"}
     )
 

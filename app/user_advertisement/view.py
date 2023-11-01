@@ -17,7 +17,7 @@ blueprint = Blueprint('user_advertisement', __name__)
 @blueprint.route('/add', methods=['GET', 'POST'])
 def add_ad_user():
     if current_user.is_anonymous:
-        flash('Для добавления своих объявлений нужно авторизоваться', 'danger')
+        flash('Для добавления своих объявлений нужно авторизоваться', 'warning')
         return redirect(url_for('user.login'))
     title = 'Страница создания объявления'
     form = AddAdvertisingForm()
@@ -53,7 +53,7 @@ def add_ad_user():
 @blueprint.route('/view')
 def view_ad_user():
     if current_user.is_anonymous:
-        flash('Для просмотра своих объявлений нужно авторизоваться', 'danger')
+        flash('Для просмотра своих объявлений нужно авторизоваться', 'warning')
         return redirect(url_for('user.login'))
     title = 'Страница отображения своих объявлений'
     page = request.args.get('page', 1, type=int)
@@ -67,7 +67,7 @@ def view_ad_user():
 @blueprint.route('/update/<ad_id>', methods=['GET', 'POST'])
 def update_ad_user(ad_id):
     if current_user.is_anonymous:
-        flash('Для редактирования своих объявлений нужно авторизоваться', 'danger')
+        flash('Для редактирования своих объявлений нужно авторизоваться', 'warning')
         return redirect(url_for('user.login'))
 
     post = Post.query.filter(Post.ad_id == ad_id).first()
@@ -95,3 +95,18 @@ def update_ad_user(ad_id):
     return render_template('user_advertisement/add_ad.html', title=title, form=form)
 
 
+@blueprint.route('/delete/<ad_id>')
+def delete_ad_user(ad_id):
+    if current_user.is_anonymous:
+        flash('Для удаления своих объявлений нужно авторизоваться', 'warning')
+        return redirect(url_for('user.login'))
+
+    post = Post.query.filter(Post.ad_id == ad_id).first()
+    if current_user.id != post.author_id:
+        flash('У вас нет прав для удаления этого объявления', 'danger')
+        return redirect(url_for('index.index'))
+
+    db.session.delete(post)
+    db.session.commit()
+    flash('Объявление успешно удалено', 'info')
+    return redirect(url_for('user_advertisement.view_ad_user'))
