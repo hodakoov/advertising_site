@@ -13,10 +13,13 @@ def rename_file(pictures):
     random_hex = secrets.token_hex(16)
     _, f_ext = os.path.splitext(pictures)
     new_file_name = random_hex + f_ext
-    full_path = os.path.join(current_app.instance_path, current_user.username, 'post_images/')
+    path = os.path.join('uploads/', current_user.username, 'post_images/')
+    full_path = os.path.join(current_app.static_folder, path)
     if not os.path.exists(full_path):
         os.makedirs(full_path)
-    return os.path.join(full_path + new_file_name)
+    path_image = os.path.join(path + new_file_name),
+    full_path_image = os.path.join(full_path + new_file_name),
+    return path_image, full_path_image
 
 
 def add_id_ad():

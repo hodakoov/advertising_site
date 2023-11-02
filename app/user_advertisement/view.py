@@ -26,11 +26,11 @@ def add_ad_user():
         f = form.image.data
         filename = secure_filename(f.filename)
         if filename:
-            full_path_image = rename_file(filename)
-            f.save(full_path_image)
+            path_image, full_path_image = rename_file(filename)
+            path_image = path_image[0]
+            f.save(full_path_image[0])
         else:
-            full_path_image = os.path.join(current_app.static_folder, 'images/not_loaded.jpg')
-
+            path_image = 'images/not_loaded.jpg'
         ad_id = add_id_ad()
         ad_datetime = datetime.datetime.now()
         new_user_ad = Post(
@@ -38,7 +38,7 @@ def add_ad_user():
             description=form.description.data,
             address=form.address.data,
             price=form.price.data,
-            image_url=full_path_image,
+            image_url=path_image,
             ad_id=ad_id,
             ad_datetime=ad_datetime,
             author_id=current_user.id

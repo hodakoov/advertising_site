@@ -23,18 +23,20 @@
                                 {% if 'http://' in post.image_url or 'https://' in post.image_url %}
                                  src="{{ post.image_url }}"/>
                                  {% else %}
-                                 src="{{ url_for('static', filename='images/not_loaded.jpg') }}"/>
+                                 src="{{ url_for('static', filename=post.image_url) }}"/>
                                 {% endif %}
-{#                                не работает#}
-{#                                {% if post.image_url %}src="{{ url_for('static', filename='../instance/uploads/admin/post_images/06bb0a476672a6a5e61c478ddb12ba66.png') }}"/>{% endif %}#}
-{#                                {% if post.image_url %}src="{{ url_for('/uploads/admin/post_images/86077e74e29712436fe98f5f24826a69.png') }}"/>{% endif %}#}
-{#                                {% if post.image_url %}src="{{ url_for(post.image_url) }}"/>{% endif %}#}
                         </div>
                         <div class="card-body">
                             <div class=" text-right link-underline-opacity-0 text-center name-item">
                                 <h5 class="link-underline-success">{{ post.title }}</h5>
                             </div>
-                            <h5 class=" card text-center btn-item"> Цена {{ "{:,}".format(post.price) }} ₽</h5>
+                            <h5 class=" card text-center btn-item">
+                                {% if post.price != 0 %}
+                                    Цена {{ "{:,}".format(post.price) }} ₽
+                                {% else %}
+                                Бесплатно
+                                {% endif %}
+                                </h5>
                             <small> {{ post.address }}</small>
                         </div>
                     </a>
