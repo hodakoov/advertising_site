@@ -43,9 +43,5 @@ def add_comment():
     else:
         for field, errors in form.errors.items():
             for error in errors:
-                flash(
-                    'Ошибка в поле {}: {}'.format(
-                        getattr(form, field).label.text, error
-                    )
-                )
+                flash('Некорректный комментарий', 'danger')
     return redirect(get_redirect_target())
