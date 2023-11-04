@@ -26,11 +26,12 @@ def add_ad_user():
         f = form.image.data
         filename = secure_filename(f.filename)
         if filename:
-            path_image, full_path_image = rename_file(filename)
-            path_image = path_image[0]
-            f.save(full_path_image[0])
+            new_file_name = rename_file(filename)
+            path_image = new_file_name[0]
+            full_path_image = new_file_name[1]
+            f.save(full_path_image)
         else:
-            path_image = 'images/not_loaded.jpg'
+            path_image = 'img/default_img.jpg'
         ad_id = add_id_ad()
         ad_datetime = datetime.datetime.now()
         new_user_ad = Post(

@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, url_for
+from flask import Flask, flash, redirect, url_for, send_from_directory
 from flask_login import LoginManager
 
 from app.show_advertisements.view import blueprint as show_advertisements_blueprint
@@ -38,5 +38,13 @@ def create_app(config_class=Config):
     # Создание БД (при отсутствии)
     with app.app_context():
         db.create_all()
+
+    @app.route('/media/<path:filename>')
+    def media(filename):
+        return send_from_directory(
+            app.instance_path,
+            filename,
+            as_attachment=True
+        )
 
     return app

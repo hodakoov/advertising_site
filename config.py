@@ -14,5 +14,5 @@ class Config:
 
     SECRET_KEY = '3c2b5a460cf5a395731dd6e98a5690cb'
 
-    UPLOAD_FOLDER = os.path.join(basedir, 'app/static/uploads')
+    UPLOAD_FOLDER = os.path.join(basedir, 'app/media')
     MAX_CONTENT_LENGTH = 2 * 1024 * 1024
