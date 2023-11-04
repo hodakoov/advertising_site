@@ -23,14 +23,18 @@ def add_ad_user():
     form = AddAdvertisingForm()
     if form.validate_on_submit():
         # Сохранение картинки
-        f = form.image.data
-        filename = secure_filename(f.filename)
-        if filename:
-            path_image, full_path_image = rename_file(filename)
-            path_image = path_image[0]
-            f.save(full_path_image[0])
-        else:
+        data = form.image.data
+        list_path_image = []
+        if data[0].filename == '':
             path_image = 'images/not_loaded.jpg'
+            list_path_image.append(path_image)
+        else:
+            for f in data:
+                filename = secure_filename(f.filename)
+                path_image, full_path_image = rename_file(filename)
+                path_image = path_image[0]
+                f.save(full_path_image[0])
+                list_path_image.append(path_image)
         ad_id = add_id_ad()
         ad_datetime = datetime.datetime.now()
         new_user_ad = Post(
@@ -38,7 +42,7 @@ def add_ad_user():
             description=form.description.data,
             address=form.address.data,
             price=form.price.data,
-            image_url=path_image,
+            image_url=' '.join(list_path_image),
             ad_id=ad_id,
             ad_datetime=ad_datetime,
             author_id=current_user.id
