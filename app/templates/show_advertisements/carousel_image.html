@@ -2,15 +2,16 @@
 
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="background-color: rgba(169,169,169,0.36)">
             <div class="carousel-inner">
+            {% set images = post.image_url.split(' ') %}
                 {% for image in images %}
                 <div class="carousel-item {% if loop.index == 1 %}active{% endif %}" data-bs-interval="3000">
                     <img class="d-block w-100" style="height: 300px; object-fit: contain" alt="..."
-                         {% if 'http://' in post.image_url or 'https://' in post.image_url %}
-                            src="{{ post.image_url }}"
-                        {% elif post.image_url in 'img/default_img.jpg'%}
-                            src="{{ url_for('static', filename=post.image_url) }}"
+                         {% if 'http://' in image or 'https://' in image %}
+                            src="{{ image }}"
+                        {% elif image in 'img/default_img.jpg'%}
+                            src="{{ url_for('static', filename=image) }}"
                         {% else %}
-                            src="{{ url_for('media', filename=post.image_url) }}"
+                            src="{{ url_for('media', filename=image) }}"
                         {% endif %}
                     />
                 </div>

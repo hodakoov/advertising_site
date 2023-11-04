@@ -21,14 +21,14 @@
                            style="max-width: 360px; margin: 0 auto;"
                            href="{{ url_for('index.detail_ad', ad_id=post.ad_id) }}">
                             <div style="display: flex; justify-content: center; overflow: hidden; height: 285px; width: 100%;">
-                                <img style="height: 100%; width: 100%; object-fit: cover"
-                                     class="rounded mx-auto d-block"
-                                    {% if 'http://' in post.image_url or 'https://' in post.image_url %}
-                                        src="{{ post.image_url }}"
+                                <img style="height: 100%; width: 100%; object-fit: cover" class="rounded mx-auto d-block"
+                                    {% set image = post.image_url.split(' ') %}
+                                    {% if 'http://' in image[0] or 'https://' in image[0] %}
+                                     src="{{ image[0] }}"
                                     {% elif post.image_url in 'img/default_img.jpg'%}
-                                        src="{{ url_for('static', filename=post.image_url) }}"
+                                        src="{{ url_for('static', filename=image[0]) }}"
                                     {% else %}
-                                        src="{{ url_for('media', filename=post.image_url) }}"
+                                        src="{{ url_for('media', filename=image[0]) }}"
                                     {% endif %}
                                 />
                             </div>

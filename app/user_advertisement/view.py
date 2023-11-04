@@ -1,7 +1,6 @@
 import datetime
-import os
 
-from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user
 from sqlalchemy import desc
 from werkzeug.utils import secure_filename
@@ -22,29 +21,20 @@ def add_ad_user():
     title = 'Страница создания объявления'
     form = AddAdvertisingForm()
     if form.validate_on_submit():
-        # Сохранение картинки
-        f = form.image.data
-        filename = secure_filename(f.filename)
-        if filename:
-            path_image, full_path_image = rename_file(filename)
-            path_image = path_image[0]
-            f.save(full_path_image[0])
+        # Сохранение картинки(картинок)
+        data = form.image.data
+        list_path_image = []
+        if data[0].filename == '':
+            path_image = 'img/default_img.jpg'
+            list_path_image.append(path_image)
         else:
-            path_image = 'images/not_loaded.jpg'
-            # # Сохранение картинки
-            # data = form.image.data
-            # list_path_image = []
-            # if data[0].filename == '':
-            #     path_image = 'images/not_loaded.jpg'
-            #     list_path_image.append(path_image)
-            # else:
-            #     for f in data:
-            #         filename = secure_filename(f.filename)
-            #         path_image, full_path_image = rename_file(filename)
-            #         path_image = path_image[0]
-            #         f.save(full_path_image[0])
-            #         list_path_image.append(path_image)
-
+            for f in data:
+                filename = secure_filename(f.filename)
+                new_file_name = rename_file(filename)
+                path_image = new_file_name[0]
+                full_path_image = new_file_name[1]
+                f.save(full_path_image)
+                list_path_image.append(path_image)
         ad_id = add_id_ad()
         ad_datetime = datetime.datetime.now()
         new_user_ad = Post(
@@ -52,7 +42,7 @@ def add_ad_user():
             description=form.description.data,
             address=form.address.data,
             price=form.price.data,
-            image_url=path_image,
+            image_url=' '.join(list_path_image),
             ad_id=ad_id,
             ad_datetime=ad_datetime,
             author_id=current_user.id
@@ -93,15 +83,21 @@ def update_ad_user(ad_id):
     form = AddAdvertisingForm(obj=post)
     if form.validate_on_submit():
         # Обновление картинки
-        f = form.image.data
-        filename = secure_filename(f.filename)
+        data = form.image.data
+        list_path_image = []
+        filename = secure_filename(data[0].filename)
         if filename:
-            full_path_image = rename_file(filename)
-            f.save(full_path_image)
+            for f in data:
+                filename = secure_filename(f.filename)
+                new_file_name = rename_file(filename)
+                path_image = new_file_name[0]
+                full_path_image = new_file_name[1]
+                f.save(full_path_image)
+                list_path_image.append(path_image)
+            list_path_image = ' '.join(list_path_image)
         else:
-            full_path_image = post.image_url
-        post.image_url = full_path_image
-
+            list_path_image = post.image_url
+        post.image_url = list_path_image
         form.populate_obj(post)
         db.session.commit()
         flash('Объявление успешно обновлено', 'info')
