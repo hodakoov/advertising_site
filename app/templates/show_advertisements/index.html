@@ -23,11 +23,14 @@
                             <div style="display: flex; justify-content: center; overflow: hidden; height: 285px; width: 100%;">
                                 <img style="height: 100%; width: 100%; object-fit: cover"
                                      class="rounded mx-auto d-block"
-                                        {% if 'http://' in post.image_url or 'https://' in post.image_url %}
-                                     src="{{ post.image_url }}"/>
-                                        {% else %}
-                                            src="{{ url_for('static', filename=post.image_url) }}"/>
-                                        {% endif %}
+                                    {% if 'http://' in post.image_url or 'https://' in post.image_url %}
+                                        src="{{ post.image_url }}"
+                                    {% elif post.image_url in 'img/default_img.jpg'%}
+                                        src="{{ url_for('static', filename=post.image_url) }}"
+                                    {% else %}
+                                        src="{{ url_for('media', filename=post.image_url) }}"
+                                    {% endif %}
+                                />
                             </div>
                             <div class="card-body">
                                 <div class=" text-right link-underline-opacity-0 text-center name-item">
