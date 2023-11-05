@@ -1,5 +1,5 @@
 from flask import current_app as app
-from flask import request
+from flask import render_template, request
 from urllib.parse import urlparse, urljoin
 import requests
 
@@ -24,6 +24,12 @@ def send_comment_notification(username, email, post_title, comment_author, comme
         Пользователь {comment_author} оставил комментарий в объявлении "{post_title}":\n
         {comment_text}
     '''
+    html = render_template(
+        'email_notification.html',
+        comment_author=comment_author,
+        post_title=post_title,
+        comment_text=comment_text
+    )
 
     return requests.post(
         f'https://api.mailgun.net/v3/{domain_name}/messages',
@@ -32,6 +38,7 @@ def send_comment_notification(username, email, post_title, comment_author, comme
             'from': f'Клон Авито <postmaster@{domain_name}>',
             'to': f'{username} <{email}>',
             'subject': f'Новый комментарий в объявлении {post_title}',
-            'text': text
+            'text': text,
+            'html': html
         }
     )
