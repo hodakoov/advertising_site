@@ -5,7 +5,8 @@ from app.extensions import db
 from app.forms import CommentForm
 from app.models.comment import Comment
 from app.models.post import Post
-from app.utils import get_redirect_target
+from app.user.models import User
+from app.utils import get_redirect_target, send_comment_notification
 
 bp = Blueprint('index', __name__)
 
@@ -40,6 +41,17 @@ def add_comment():
         db.session.add(comment)
         db.session.commit()
         flash('Комментарий добавлен', 'success')
+
+        post = Post.query.filter_by(id=form.post_id.data).first()
+        comment_author = User.query.filter_by(id=current_user.id).first()
+
+        email_sender_response = send_comment_notification(
+            post.author.username,
+            post.author.email,
+            post.title,
+            comment_author.username,
+            form.comment_text.data
+        )
     else:
         for field, errors in form.errors.items():
             for error in errors:

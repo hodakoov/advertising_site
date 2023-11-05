@@ -1,3 +1,5 @@
+from sqlalchemy.orm import relationship
+
 from app.extensions import db
 from app.models.comment import Comment
 from app.user.models import User
@@ -13,6 +15,7 @@ class Post(db.Model):
     price = db.Column(db.Integer, nullable=True)
     description = db.Column(db.Text, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    author = relationship('User', backref='posts')
 
     def count_comments(self):
         return Comment.query.filter(Comment.post_id == self.id).count()
