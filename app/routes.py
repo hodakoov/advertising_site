@@ -45,7 +45,7 @@ def add_comment():
         post = Post.query.filter_by(id=form.post_id.data).first()
         comment_author = User.query.filter_by(id=current_user.id).first()
 
-        email_sender_response = send_comment_notification(
+        send_comment_notification(
             post.author.username,
             post.author.email,
             post.title,
