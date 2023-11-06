@@ -3,8 +3,7 @@ from flask_login import current_user, login_required
 
 from app.extensions import db
 from app.forms import CommentForm
-from app.models.comment import Comment
-from app.models.post import Post
+from app.models import Comment, Post
 from app.user.models import User
 from app.utils import send_comment_notification
 

@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import HiddenField, StringField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
 
-from app.models.post import Post
+from app.models import Post
 
 
 class CommentForm(FlaskForm):
