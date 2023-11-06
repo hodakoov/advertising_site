@@ -49,7 +49,7 @@
           {% endif %}
             <a class="btn btn-outline-primary me-2" href="{{ url_for('user.logout') }}" role="button">Выйти</a>
         {% else %}
-          <a class="btn btn-outline-primary me-2" href="{{ url_for('user.login', next=request.full_path) }}" role="button">Войти</a>
+          <a class="btn btn-outline-primary me-2" href="{{ url_for('user.login') }}" role="button">Войти</a>
           <a class="btn btn-primary" href="{{ url_for('user.register') }}" role="button">Регистрация</a>
         {% endif %}
       </div>

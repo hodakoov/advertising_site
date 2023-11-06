@@ -6,7 +6,7 @@ from app.forms import CommentForm
 from app.models.comment import Comment
 from app.models.post import Post
 from app.user.models import User
-from app.utils import get_redirect_target, send_comment_notification
+from app.utils import send_comment_notification
 
 bp = Blueprint('index', __name__)
 
@@ -56,4 +56,4 @@ def add_comment():
         for field, errors in form.errors.items():
             for error in errors:
                 flash('Некорректный комментарий', 'danger')
-    return redirect(get_redirect_target())
+    return redirect(request.referrer)

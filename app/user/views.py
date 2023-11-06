@@ -1,10 +1,9 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_user, logout_user
 
 from app.extensions import db
 from app.user.forms import LoginForm, RegistrationForm
 from app.user.models import User
-from app.utils import get_redirect_target
 
 blueprint = Blueprint('user', __name__, url_prefix='/users')
 
@@ -12,7 +11,7 @@ blueprint = Blueprint('user', __name__, url_prefix='/users')
 @blueprint.route('/login')
 def login():
     if current_user.is_authenticated:
-        return redirect(get_redirect_target())
+        return redirect(url_for('index.index'))
     title = 'Авторизация'
     login_form = LoginForm()
     return render_template('user/login.html', page_title=title, form=login_form)
@@ -27,7 +26,7 @@ def process_login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             flash('Вы успешно вошли на сайт', 'info')
-            return redirect(get_redirect_target())
+            return redirect(url_for('index.index'))
 
     flash('Неправильные имя или пароль', 'danger')
     return redirect(url_for('user.login'))
@@ -61,6 +60,6 @@ def process_reg():
         db.session.add(new_user)
         db.session.commit()
         flash('Вы успешно зарегистрировались!', 'success')
-        return redirect(url_for('user.login', next='/?'))
+        return redirect(url_for('user.login'))
     flash('Пожалуйста, исправьте ошибки в форме', 'danger')
     return redirect(url_for('user.register'))
