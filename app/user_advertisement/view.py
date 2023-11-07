@@ -13,8 +13,8 @@ from .utils import rename_file, add_id_ad
 blueprint = Blueprint('user_advertisement', __name__)
 
 
-@blueprint.route('/add', methods=['GET', 'POST'])
-def add_ad_user():
+@blueprint.route('/create', methods=['GET', 'POST'])
+def create_ad_user():
     if current_user.is_anonymous:
         flash('Для добавления своих объявлений нужно авторизоваться', 'warning')
         return redirect(url_for('user.login'))
@@ -51,11 +51,11 @@ def add_ad_user():
         db.session.commit()
         flash('Объявление успешно добавлено', 'info')
         return redirect(url_for('index.index'))
-    return render_template('user_advertisement/add_ad.html', title=title, form=form)
+    return render_template('user_advertisement/create_ad.html', title=title, form=form)
 
 
-@blueprint.route('/view')
-def view_ad_user():
+@blueprint.route('/read')
+def read_ad_user():
     if current_user.is_anonymous:
         flash('Для просмотра своих объявлений нужно авторизоваться', 'warning')
         return redirect(url_for('user.login'))
@@ -65,7 +65,7 @@ def view_ad_user():
         .filter(Post.author_id == current_user.id)\
         .order_by(desc('ad_datetime'))\
         .paginate(page=page, per_page=8)
-    return render_template('user_advertisement/view_ad.html', title=title, pagination=pagination)
+    return render_template('user_advertisement/read_ad.html', title=title, pagination=pagination)
 
 
 @blueprint.route('/update/<ad_id>', methods=['GET', 'POST'])
@@ -102,7 +102,7 @@ def update_ad_user(ad_id):
         db.session.commit()
         flash('Объявление успешно обновлено', 'info')
         return redirect(url_for('index.detail_ad', ad_id=post.ad_id))
-    return render_template('user_advertisement/add_ad.html', title=title, form=form)
+    return render_template('user_advertisement/create_ad.html', title=title, form=form)
 
 
 @blueprint.route('/delete/<ad_id>')

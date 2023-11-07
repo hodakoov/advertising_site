@@ -41,8 +41,8 @@
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="{{ url_for('index.index') }}" class="nav-link px-2">Домашняя страница</a></li>
         {% if current_user.is_authenticated %}
-        <li><a href="{{ url_for('user_advertisement.add_ad_user') }}" class="nav-link px-2">Добавить объявление</a></li>
-        <li><a href="{{ url_for('user_advertisement.view_ad_user') }}" class="nav-link px-2">Мои объявления</a></li>
+        <li><a href="{{ url_for('user_advertisement.create_ad_user') }}" class="nav-link px-2">Добавить объявление</a></li>
+        <li><a href="{{ url_for('user_advertisement.read_ad_user') }}" class="nav-link px-2">Мои объявления</a></li>
         {% endif %}
         <li><a href="#" class="nav-link px-2">Поиск объявлений</a></li>
         <li><a href="#" class="nav-link px-2">О проекте</a></li>
