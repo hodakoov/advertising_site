@@ -3,7 +3,7 @@ import random
 
 from faker import Faker
 
-from app.show_advertisements.models import Post
+from app.models import Post
 from app.extensions import db
 from app import create_app
 

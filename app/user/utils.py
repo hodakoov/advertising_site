@@ -6,7 +6,7 @@ import string
 from flask import current_app
 from flask_login import current_user
 
-from app.show_advertisements.models import Post
+from app.models import Post
 
 
 def rename_file(pictures):

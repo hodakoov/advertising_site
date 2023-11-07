@@ -1,12 +1,11 @@
-from flask import Flask, flash, redirect, url_for, send_from_directory
+from flask import Flask, flash, redirect, url_for, send_from_directory, render_template
 from flask_login import LoginManager
 
-from app.show_advertisements.view import blueprint as show_advertisements_blueprint
 from app.admin.views import blueprint as admin_blueprint
 from app.extensions import db
-from app.user_advertisement.view import blueprint as my_advertisement_blueprint
 from app.user.models import User
 from app.user.views import blueprint as user_blueprint
+from app.views import blueprint as index_blueprint
 from config import Config
 
 
@@ -27,13 +26,16 @@ def create_app(config_class=Config):
     @app.errorhandler(413)
     def too_large(e):
         flash('Размер файла превышает допустимое значение!', 'danger')
-        return redirect(url_for('user_advertisement.add_ad_user'))
+        return redirect(url_for('user.create_ad_user'))
+
+    @app.errorhandler(404)
+    def too_large(e):
+        return render_template('404_error.html')
 
     # Регистрация blueprints
     app.register_blueprint(admin_blueprint)
-    app.register_blueprint(show_advertisements_blueprint)
+    app.register_blueprint(index_blueprint)
     app.register_blueprint(user_blueprint)
-    app.register_blueprint(my_advertisement_blueprint)
 
     # Создание БД (при отсутствии)
     with app.app_context():

@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-6">
                 <h3 style="margin-bottom: 20px">{{ post.title }}</h3>
-                {% include 'show_advertisements/carousel_image.html' %}
+                {% include 'carousel_image.html' %}
                 <p></p>
                 <h4 style="margin-top: 20px">Описание</h4>
                 <p>{{ post.description }}</p>
@@ -40,11 +40,11 @@
                 <br>
                 {% if current_user.id == post.author_id %}
                     <p><a class="btn btn-secondary me-2"
-                          href="{{ url_for('user_advertisement.update_ad_user', ad_id=post.ad_id) }}"
+                          href="{{ url_for('user.update_ad_user', ad_id=post.ad_id) }}"
                           role="button">Редактирование объявления</a></p>
 
                     <p><a class="btn btn-danger me-2"
-                          href="{{ url_for('user_advertisement.delete_ad_user', ad_id=post.ad_id) }}"
+                          href="{{ url_for('user.delete_ad_user', ad_id=post.ad_id) }}"
                           role="button">Удаление объявления</a></p>
                 {% endif %}
             </div>

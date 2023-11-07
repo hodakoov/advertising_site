@@ -12,7 +12,7 @@ from selenium.webdriver.common.by import By
 
 from app import create_app
 from app.extensions import db
-from app.show_advertisements.models import Post
+from app.models import Post
 
 
 logging.basicConfig(

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} Страница не найдена {% endblock %}
+
+{% block content %}
+
+    <div class="container text-center">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">{{ message }}<br></div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h3>Страница не найдена. Ошибка 404</h3>
+    </div>
+{% endblock %}
