@@ -56,3 +56,4 @@ def add_comment():
             for error in errors:
                 flash('Некорректный комментарий', 'danger')
     return redirect(request.referrer)
+  

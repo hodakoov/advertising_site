@@ -1,73 +1,91 @@
 {% extends 'base.html' %}
 
-{% block title %} Главная страница {% endblock %}
+{% block title %} {{ title }}{% endblock %}
 
 {% block content %}
 
     <div class="container text-center">
         {% include('messages.html') %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3">
-            {% for post in pagination.items %}
-                <div class="col">
-                    <a class=" text-right link-underline link-underline-opacity-0 text-center card h-100" style="max-width: 360px; margin: 0 auto;" href="{{ url_for('index.detail_ad', ad_id=post.ad_id) }}">
-                        <div style="display: flex; justify-content: center; overflow: hidden; height: 285px; width: 100%;">
-                            <img style="height: 100%; width: 100%; object-fit: cover" class="rounded mx-auto d-block"
-                                 src="{{ post.image_url }}"/>
-                        </div>
-                        <div class="card-body">
-                            <div class=" text-right link-underline-opacity-0 text-center name-item"
-                           >
-                                <h5 class="link-underline-success">{{ post.title }}</h5>
+            {% if pagination.items %}
+                {% for post in pagination.items %}
+                    <div class="col">
+                        <a class=" text-right link-underline link-underline-opacity-0 text-center card h-100"
+                           style="max-width: 360px; margin: 0 auto;"
+                           href="{{ url_for('index.detail_ad', ad_id=post.ad_id) }}">
+                            <div style="display: flex; justify-content: center; overflow: hidden; height: 285px; width: 100%;">
+                                <img style="height: 100%; width: 100%; object-fit: cover" class="rounded mx-auto d-block"
+                                    {% set image = post.image_url.split(' ') %}
+                                    {% if 'http://' in image[0] or 'https://' in image[0] %}
+                                     src="{{ image[0] }}"
+                                    {% elif post.image_url in 'img/default_img.jpg'%}
+                                        src="{{ url_for('static', filename=image[0]) }}"
+                                    {% else %}
+                                        src="{{ url_for('media', filename=image[0]) }}"
+                                    {% endif %}
+                                />
                             </div>
-                            <h5 class=" card text-center btn-item"> Цена {{ "{:,}".format(post.price) }} ₽</h5>
-                            <small> {{ post.address }}</small>
-                        </div>
-                    </a>
+                            <div class="card-body">
+                                <div class=" text-right link-underline-opacity-0 text-center name-item">
+                                    <h5 class="link-underline-success">{{ post.title }}</h5>
+                                </div>
+                                <h5 class=" card text-center btn-item">
+                                    {% if post.price != 0 %}
+                                        Цена {{ "{:,}".format(post.price) }} ₽
+                                    {% else %}
+                                        Бесплатно
+                                    {% endif %}</h5>
+                                <small> {{ post.address }}</small>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
 
-        <nav aria-label="Навигация по страницам" style="margin:20px auto 50px">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link {% if not pagination.has_prev %} disabled {% endif %}"
-                       href="{% if pagination.has_prev %}
+                <nav aria-label="Навигация по страницам" style="margin:20px auto 50px">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link {% if not pagination.has_prev %} disabled {% endif %}"
+                               href="{% if pagination.has_prev %}
                             {{ url_for('index.index', page=pagination.prev_num) }}
                             {% else %}{% endif %}">Предыдущая
-                    </a>
-                </li>
-
-                {% for number in pagination.iter_pages() %}
-                    {% if number %}
-                        {% if pagination.page != number %}
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="{{ url_for('index.index', page=number) }}">
-                                    {{ number }}
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="page-item active">
-                                <a class="page-link ">
-                                    {{ number }}
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% else %}
-                        <li class="page-item">
-                            <a class="page-link ">...</a>
+                            </a>
                         </li>
-                    {% endif %}
-                {% endfor %}
 
-                <li class="page-item">
-                    <a class="page-link {% if not pagination.has_next %} disabled {% endif %}"
-                       href="{% if pagination.has_next %}
+                        {% for number in pagination.iter_pages() %}
+                            {% if number %}
+                                {% if pagination.page != number %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="{{ url_for('index.index', page=number) }}">
+                                            {{ number }}
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item active">
+                                        <a class="page-link ">
+                                            {{ number }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link ">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <li class="page-item">
+                            <a class="page-link {% if not pagination.has_next %} disabled {% endif %}"
+                               href="{% if pagination.has_next %}
                             {{ url_for('index.index', page=pagination.next_num) }}
                             {% else %}{% endif %}">Следующая
-                    </a>
-                </li>
-            </ul>
-        </nav>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            {% else %}
+                <p>Объявлений нет</p>
+            {% endif %}
     </div>
 {% endblock %}

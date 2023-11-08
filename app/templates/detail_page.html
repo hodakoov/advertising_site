@@ -5,13 +5,18 @@
 {% block content %}
 
     <div class="container">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">{{ message }}<br></div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <div class="row">
             <div class="col-6">
                 {% include('messages.html') %}
                 <h3 style="margin-bottom: 20px">{{ post.title }}</h3>
                 {% include 'carousel_image.html' %}
-{#                <img style="height: 285px; object-fit: contain" class="rounded mx-auto d-block"#}
-{#                     src="{{ post.image_url }}"/>#}
                 <p></p>
                 <h4 style="margin-top: 20px">Описание</h4>
                 <p>{{ post.description }}</p>
@@ -23,11 +28,26 @@
             </div>
 
             <div class="col-4">
-                <h3>Цена: {{ "{:,}".format(post.price) }} ₽</h3>
+                <h3>
+                    {% if post.price != 0 %}
+                        Цена {{ "{:,}".format(post.price) }} ₽
+                    {% else %}
+                        Бесплатно
+                    {% endif %}
+                </h3>
                 <br>
                 <h6>Адрес</h6>
                 <p>{{ post.address }}</p>
-                <p></p>
+                <br>
+                {% if current_user.id == post.author_id %}
+                    <p><a class="btn btn-secondary me-2"
+                          href="{{ url_for('user.update_ad_user', ad_id=post.ad_id) }}"
+                          role="button">Редактирование объявления</a></p>
+
+                    <p><a class="btn btn-danger me-2"
+                          href="{{ url_for('user.delete_ad_user', ad_id=post.ad_id) }}"
+                          role="button">Удаление объявления</a></p>
+                {% endif %}
             </div>
         </div>
         <div class="row">
