@@ -1,11 +1,11 @@
 from flask import Flask, flash, redirect, url_for, send_from_directory, render_template
 from flask_login import LoginManager
 
+from app import views
 from app.admin.views import blueprint as admin_blueprint
 from app.extensions import db
 from app.user.models import User
 from app.user.views import blueprint as user_blueprint
-from app.views import blueprint as index_blueprint
 from config import Config
 
 
@@ -34,7 +34,7 @@ def create_app(config_class=Config):
 
     # Регистрация blueprints
     app.register_blueprint(admin_blueprint)
-    app.register_blueprint(index_blueprint)
+    app.register_blueprint(views.bp)
     app.register_blueprint(user_blueprint)
 
     # Создание БД (при отсутствии)
