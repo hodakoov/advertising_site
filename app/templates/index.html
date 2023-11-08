@@ -5,14 +5,7 @@
 {% block content %}
 
     <div class="container text-center">
-        {% with messages = get_flashed_messages(with_categories=True) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}" role="alert">{{ message }}<br></div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
+        {% include('messages.html') %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3">
             {% for post in pagination.items %}
                 <div class="col">
