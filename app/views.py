@@ -57,4 +57,9 @@ def add_comment():
             for error in errors:
                 flash('Некорректный комментарий', 'danger')
     return redirect(request.referrer)
-  
+
+
+@bp.route('/about')
+def about():
+    return render_template('about.html')
+
