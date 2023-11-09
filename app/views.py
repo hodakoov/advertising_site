@@ -1,5 +1,6 @@
-from flask import Blueprint, flash, render_template, redirect, request, url_for
+from flask import Blueprint, flash, render_template, redirect, request
 from flask_login import current_user, login_required
+from sqlalchemy import desc
 
 from app.extensions import db
 from app.forms import CommentForm
@@ -13,7 +14,7 @@ bp = Blueprint('index', __name__)
 @bp.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.paginate(page=page, per_page=8)
+    pagination = Post.query.order_by(desc('ad_datetime')).paginate(page=page, per_page=8)
     return render_template('index.html', pagination=pagination)
 
 
