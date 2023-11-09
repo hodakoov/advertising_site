@@ -29,8 +29,12 @@ def create_app(config_class=Config):
         return redirect(url_for('user.create_ad_user'))
 
     @app.errorhandler(404)
-    def too_large(e):
+    def not_found(e):
         return render_template('404_error.html')
+
+    @app.errorhandler(500)
+    def internal_error(error):
+        return "<h3>Ошибка на сервере. Обратитесь к администратору</h3>"
 
     # Регистрация blueprints
     app.register_blueprint(admin_blueprint)
